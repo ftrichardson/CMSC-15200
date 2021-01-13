@@ -1,6 +1,6 @@
 OBJECTS = 
 CFLAGS = -g -Wall -O3 --std=c11
-LDLIBS= -l criterion
+LDLIBS= -l criterion -lm
 INCLUDES=./include
 SOURCE= ./src
 TESTS=./tests
