@@ -10,7 +10,7 @@ CC=clang
 all: student_test_se1 test_se1
 
 student_test_se1: $(SOURCE)/se1.c $(SOURCE)/student_test_se1.c
-	$(CC) $(CFLAGS) $(SOURCE)/se1.c $(SOURCE)/student_test_se1.c -o $(BIN)/$@ -I $(INCLUDES)
+	$(CC) $(CFLAGS) $(SOURCE)/se1.c $(SOURCE)/student_test_se1.c -o $(BIN)/$@ -I $(INCLUDES) $(LDLIBS)
 
 test_se1: $(TESTS)/test_se1.c $(SOURCE)/se1.c
 	$(CC) $(CFLAGS) $(TESTS)/test_se1.c $(SOURCE)/se1.c  -o $(BIN)/$@ -I $(INCLUDES) $(LDLIBS)
