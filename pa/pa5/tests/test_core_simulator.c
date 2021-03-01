@@ -687,7 +687,7 @@ Test(simulate_cores, testO)
     int num_cores = 3;
     int time_slice = 4;
     char *test_desc = "Simulate 11 tasks on three cores";
-    char *test_str = "tm_add_task/testO)";
+    char *test_str = "simulate_cores/testO)";
 
     int heap_size = INITIAL_HEAP_SIZE*GROWTH_MULTIPLIER*GROWTH_MULTIPLIER;
 
