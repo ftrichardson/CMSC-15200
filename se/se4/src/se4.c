@@ -29,12 +29,11 @@
  *     find_amount_of_denomination(88, 10, num_denomination) yields:
  *         80, num_denomination points to 8
  */
-int find_amount_of_denomination(int cents, int denomination, int *num_denomination_ptr){
-
-    // YOUR CODE HERE
-    // REPLACE 0 WITH YOUR RETURN VALUE
-
-    return 0;
+int find_amount_of_denomination(int cents, int denomination, 
+                                int *num_denomination_ptr)
+{
+    *num_denomination_ptr = cents / denomination;
+    return denomination * (*num_denomination_ptr);
 }
 
 /* Exercise 1 - make_change
@@ -52,16 +51,28 @@ int find_amount_of_denomination(int cents, int denomination, int *num_denominati
  *         nickels: 1
  *         pennies: 2
  *     make_change(88) yields a struct coins with:
- *         quarters: 3
- *         dimes: 1
- *         nickels: 0
+ *         quarters: 2
+ *         dimes: 3
+ *         nickels: 1
  *         pennies: 3
  */
-struct coins make_change(int cents){
-    
-    // YOUR CODE HERE
-
+struct coins make_change(int cents)
+{
     struct coins c;
+    int num_coins;
+
+    cents -= find_amount_of_denomination(cents, QUARTER, &num_coins);
+    c.quarters = num_coins;
+
+    cents -= find_amount_of_denomination(cents, DIME, &num_coins);
+    c.dimes = num_coins;
+
+    cents -= find_amount_of_denomination(cents, NICKEL, &num_coins);
+    c.nickels = num_coins;
+
+    cents -= find_amount_of_denomination(cents, PENNY, &num_coins);
+    c.pennies = num_coins;
+
     return c;
 }
 
@@ -92,12 +103,37 @@ struct coins make_change(int cents){
  *         arr_len: 8
  *         data.a:  {9, 8, 7, 6, 9, 8, 7, 6}        
  */
-struct tagged_array *repeat(struct tagged_array t_arr){
+struct tagged_array *repeat(struct tagged_array t_arr)
+{
+    struct tagged_array* tagged_repeat = (struct tagged_array*)malloc(sizeof(struct tagged_array));
 
-    // YOUR CODE HERE
-    // REPLACE NULL WITH YOUR RETURN VALUE
+    tagged_repeat->tag = t_arr.tag;
+    tagged_repeat->arr_len = (2 * t_arr.arr_len);
 
-    return NULL;
+    switch (tagged_repeat->tag) {
+        case INT_ARRAY:
+            tagged_repeat->data.a = (int*)malloc(tagged_repeat->arr_len * sizeof(int));
+            
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < t_arr.arr_len; j++) {
+                    tagged_repeat->data.a[(i * t_arr.arr_len) + j] = t_arr.data.a[j];
+                }
+            }
+            break;
+        case STRING:
+            tagged_repeat->data.s = (char*)malloc((tagged_repeat->arr_len + 1) * sizeof(char));
+
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < t_arr.arr_len; j++) {
+                    tagged_repeat->data.s[(i * t_arr.arr_len) + j] = t_arr.data.s[j];
+
+                    if (i == 1 && j == (t_arr.arr_len - 1)) {
+                        tagged_repeat->data.s[tagged_repeat->arr_len] = '\0';
+                    }
+                }
+            }
+    }
+    return tagged_repeat;
 }
 
 /* Exercise 3 - create_negative
@@ -115,10 +151,20 @@ struct tagged_array *repeat(struct tagged_array t_arr){
  *     create_negative({{1, 1, 0}, {0, 1, 0}}, 3) yields:
  *         the array {{0, 0, 1}, {1, 0, 1}}
  */
-bool **create_negative(bool** image, int len){
+bool **create_negative(bool** image, int len)
+{
+    bool** negative = (bool**)malloc(2 * sizeof(bool*));
 
-    // YOUR CODE HERE
-    // REPLACE NULL WITH YOUR RETURN VALUE
+    for (int i = 0; i < 2; i++) {
+        negative[i] = (bool*)malloc(len * sizeof(bool));
 
-    return NULL;
+        for (int j = 0; j < len; j++) {    
+            if (image[i][j]) {
+                negative[i][j] = 0;
+            } else {
+                negative[i][j] = 1;
+            }
+        }
+    }
+    return negative;
 }

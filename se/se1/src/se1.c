@@ -14,11 +14,8 @@
  */
 double vec_length(double x, double y, double z)
 {
-    // YOUR CODE GOES HERE
-    // Replace 0.0 with an appropriate return value
-    return 0.0;
+    return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
 }
-
 
 /*
  * compute_div_fraction - extract fractional part of the value that
@@ -34,9 +31,7 @@ double compute_div_fraction(int x, int y)
     assert(x > 0);
     assert(y > 0);
 
-    // YOUR CODE GOES HERE
-    // Replace 0.0 with an appropriate return value
-    return 0.0;
+    return ((double) x / y) - (x / y);
 }
 
 /*
@@ -54,9 +49,7 @@ bool is_congruent_mod_n(int a, int b, int n)
     assert(b > 0);
     assert(n > 0);
     
-    // YOUR CODE GOES HERE
-    // Replace false with an appropriate return value
-    return false;
+    return (a % n) == (b % n);
 }
 
 
@@ -73,9 +66,11 @@ bool is_congruent_mod_n(int a, int b, int n)
  */
 bool is_out_of_range(double x, double lb, double ub, bool endpoints_in_range)
 {
-    // YOUR CODE GOES HERE
-    // Replace false with an appropriate return value
-    return false;
+    if (endpoints_in_range) {
+        return x < lb || x > ub;    
+    }
+
+    return x <= lb || x >= ub;
 }
 
 /* 
@@ -90,9 +85,13 @@ bool is_out_of_range(double x, double lb, double ub, bool endpoints_in_range)
  */
 double clip(double x, double lb, double ub)
 {
-    // YOUR CODE GOES HERE
-    // Replace 0.0 with an appropriate return value
-    return 0.0;
+    if (x < lb) {
+        return lb;
+    }
+
+    if (x > ub) {
+        return ub;
+    }
+
+    return x;
 }
-
-

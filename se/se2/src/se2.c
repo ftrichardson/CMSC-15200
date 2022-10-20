@@ -35,12 +35,16 @@ double compute_payoff_amount(double initial, double payment, int days_since_loan
     assert(payment > 0);
     assert(payment_interval > 0);
 
-    // YOUR CODE GOES HERE
-    // REPLACE 0 WITH A SUITABLE RETURN VALUE
+    if (days_since_loan_started <= 0) {
+        return initial;
+    }
+    
+    if (initial - ((days_since_loan_started / payment_interval) * payment) < 0) {
+        return 0;
+    }
 
-    return 0;
+    return initial - ((days_since_loan_started / payment_interval) * payment);
 }
-  
 /*
  * Exercise 2
  * compute_leonardo - the Leonardo numbers are a sequence of numbers given by the recurrence:
@@ -55,11 +59,29 @@ double compute_payoff_amount(double initial, double payment, int days_since_loan
  */
 int compute_leonardo(int n)
 {
+    
+    // Represents the beginning Leonardo numbers
+    int x = 1;
+    int y = 1;
 
-    // YOUR CODE GOES HERE
-    // REPLACE 0 WITH A SUITABLE RETURN VALUE
+    int z; // Will hold value of the n-th Leonardo number
 
-    return 0;
+    if (n == 0 || n == 1) {
+        return 1;
+    }
+    
+    for (int i = 2; i <= n; i++) {
+        z = x + y + 1;
+
+        if (i == n) { // By this point, we have our n-th Leonardo number
+            break;
+        }
+
+        x = y;
+        y = z;
+    }
+
+    return z;
 }
 
 /*
@@ -81,10 +103,15 @@ double bakhshali_iterative(double S, double guess)
 {
     assert(S > 0);
 
-    // YOUR CODE GOES HERE
-    // REPLACE 0.0 WITH A SUITABLE RETURN VALUE
+    double a, b;
 
-    return 0.0;
+    while (!(fabs((guess * guess) - S) < EPSILON)) {
+        a = (S - (guess * guess)) / (2 * guess);
+        b = guess + a;
+        guess = b - ((a * a) / (2 * b));
+    }
+
+    return guess;
 }
 
 /*
@@ -106,8 +133,15 @@ double bakhshali_recursive(double S, double guess)
 {
     assert(S > 0);
 
-    // YOUR CODE GOES HERE
-    // REPLACE 0.0 WITH A SUITABLE RETURN VALUE
-    
-    return 0.0;
+    double a, b;
+
+    if (fabs((guess * guess) - S) < EPSILON) {
+        return guess;
+    }
+
+    a = (S - (guess * guess)) / (2 * guess);
+    b = guess + a;
+    guess = b - ((a * a) / (2 * b));
+
+    return bakhshali_recursive(S, guess);
 }
